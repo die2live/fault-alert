@@ -7,6 +7,10 @@ namespace FaultAlert.Console
         static void Main(string[] args)
         {
             System.Console.WriteLine("Hello World!");
+
+            ServiceProvider sp = new ACCServiceProvider();
+
+            sp.Update();
         }
     }
 }
