@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 
 namespace FaultAlert
 {
@@ -7,7 +7,7 @@ namespace FaultAlert
     {
         public string Name { get; set; }
 
-        public abstract bool Update();
+        public abstract List<string> Update();
    
     }
 }

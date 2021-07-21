@@ -10,7 +10,15 @@ namespace FaultAlert.Console
 
             ServiceProvider sp = new ACCServiceProvider();
 
-            sp.Update();
+            var alerts = sp.Update();
+
+            var sender = new EmailSender();
+
+            foreach (var alert in alerts)
+            {
+                sender.Send("alert", alert);
+            }
+            
         }
     }
 }

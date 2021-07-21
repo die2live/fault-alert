@@ -1,7 +1,9 @@
-﻿namespace FaultAlert
+﻿using System.Collections.Generic;
+
+namespace FaultAlert
 {
     interface IServiceProvider
     {
-        bool Update();
+        List<string> Update();
     }
 }
