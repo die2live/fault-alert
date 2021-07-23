@@ -68,6 +68,12 @@ namespace FaultAlert
             }
         }
 
-        
+        public static string[] SearchTerms
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["searchTerms"].Split(",");
+            }
+        }
     }
 }
