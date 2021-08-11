@@ -4,20 +4,24 @@ namespace FaultAlert.Console
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            System.Console.WriteLine("Hello World!");
+            while(true){
+                Console.WriteLine("Hello World!");
 
-            ServiceProvider sp = new ACCServiceProvider();
+                ServiceProvider sp = new ACCServiceProvider();
 
-            var alerts = sp.Update();
+                var alerts = sp.Update();
 
-            var sender = new EmailSender();
+                var sender = new EmailSender();
 
-            foreach (var alert in alerts)
-            {
-                sender.Send("alert", alert);
+                foreach (var alert in alerts)
+                {
+                    sender.Send("alert", alert);
+                }
+                await Task.Delay(500);
             }
+            
             
         }
     }
