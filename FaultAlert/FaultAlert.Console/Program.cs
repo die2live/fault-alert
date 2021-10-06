@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 
 namespace FaultAlert.Console
 {
@@ -6,9 +6,9 @@ namespace FaultAlert.Console
     {
         static async Task Main(string[] args)
         {
-            while(true){
-                Console.WriteLine("Hello World!");
+            System.Console.WriteLine("Fault Alert started!!!");
 
+            while (true){
                 ServiceProvider sp = new ACCServiceProvider();
 
                 var alerts = sp.Update();
@@ -19,7 +19,7 @@ namespace FaultAlert.Console
                 {
                     sender.Send("alert", alert);
                 }
-                await Task.Delay(500);
+                await Task.Delay(5000);
             }
             
             
