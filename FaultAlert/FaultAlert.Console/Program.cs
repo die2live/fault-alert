@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace FaultAlert.Console
 {
@@ -8,21 +12,46 @@ namespace FaultAlert.Console
         {
             System.Console.WriteLine("Fault Alert started!!!");
 
-            while (true){
-                ServiceProvider sp = new ACCServiceProvider();
+            var hostBuilder = new HostBuilder()
+            .ConfigureAppConfiguration((hostContext, configBuilder) =>
+            {
+                configBuilder.SetBasePath(Directory.GetCurrentDirectory());
+                configBuilder.AddJsonFile("appsettings.json", optional: true);
+                configBuilder.AddJsonFile(
+                    $"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json",
+                    optional: true);
+                configBuilder.AddEnvironmentVariables();
+            })
+            .ConfigureLogging((hostContext, configLogging) =>
+            {
+                configLogging.AddConfiguration(hostContext.Configuration.GetSection("Logging"));
+                configLogging.AddConsole();
+            })
+            .ConfigureServices((hostContext, services) =>
+            {
+                // Here goes your internal application dependencies
+                // like EntityFramework context, worker, endpoint, etc.
+            });
 
-                var alerts = sp.Update();
+            await hostBuilder.RunConsoleAsync();
 
-                var sender = new EmailSender();
 
-                foreach (var alert in alerts)
-                {
-                    sender.Send("alert", alert);
-                }
-                await Task.Delay(5000);
-            }
-            
-            
+            //while (true)
+            //{
+            //    ServiceProvider sp = new ACCServiceProvider();
+
+            //    var alerts = sp.Update();
+
+            //    var sender = new EmailSender();
+
+            //    foreach (var alert in alerts)
+            //    {
+            //        sender.Send("alert", alert);
+            //    }
+            //    await Task.Delay(5000);
+            //}
+
+
         }
     }
 }
