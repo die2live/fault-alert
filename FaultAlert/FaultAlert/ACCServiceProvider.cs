@@ -33,7 +33,7 @@ namespace FaultAlert
             var doc = new HtmlDocument();
             doc.LoadHtml(page);
 
-            var table = doc.DocumentNode.SelectNodes("//*[@id='descriptionDisconnection' and @data-id=2]/div/div/div/div/table[@class='avarieri']");
+            var table = doc.DocumentNode.SelectNodes("//*[@id='descriptionDisconnection' and @data-id=3]/div/div/div/div/table[@class='avarieri']");
 
             var rows = table.First().Descendants("tr");
 
